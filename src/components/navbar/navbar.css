@@ -30,18 +30,23 @@
     color: black;
 }
 
-.tab {
+.tab-container {
     margin-top: auto;
     margin-bottom: auto;
-    margin-right: 2rem;
+    margin-right: .5rem;
+    display: flex;
 }
 
-.tab NavLink {
+
+.tab {
+    padding-top: .7rem;
+    justify-content: center;
+    width: 16rem;
+    height: 3.5rem;
     text-align: center;
     text-decoration: none;
     list-style: none;
-    font-size: large;
-    width: 16rem;
+    font-size: x-large;
     border: 1px black solid;
     background-color: hsla(34, 45%, 90%, 1);
 }
