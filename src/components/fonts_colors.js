@@ -36,5 +36,6 @@ export const fonts = {
 export const svg = {
     gridRow: '2',
     gridColumn:'1/3',
-    width: '70vw'
+    width: '100%',
+    height: '100%'
 }
