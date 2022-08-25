@@ -3,13 +3,15 @@ import { appStyle } from './AppStyle.js';
 import { Form } from './components/form/Form.jsx';
 import { svg } from './components/fonts_colors';
 import { Map } from './components/map/Map.js';
+import Navbar from './components/navbar/Navbar.jsx';
 
-// Added Divs to visualize where the rest of the element go
 function App() {
   return (
     <div style={appStyle} className="App">
       <div style={{gridColumn:'1/4', border:'black solid 1px', marginLeft:-50, marginRight:-50}}>Header</div>
       <Map />
+      <Navbar />
+      <Showcase />
       <Form />
       <div style={{gridColumn:'1/4', border:'black solid 1px'}}>Rest</div>
     </div>
