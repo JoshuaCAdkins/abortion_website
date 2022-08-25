@@ -1,5 +1,5 @@
 import {fonts, colors} from '../fonts_colors';
-import background from "../background.jpg";
+
 
 export const formDiv = {
     boxSizing: 'border-box',
