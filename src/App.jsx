@@ -4,7 +4,6 @@ import { Form } from './components/form/Form.jsx';
 import { svg } from './components/fonts_colors';
 import Navbar from './components/navbar/Navbar.jsx';
 
-// Added Divs to visualize where the rest of the element go
 function App() {
   return (
     <div style={appStyle} className="App">
@@ -66,7 +65,7 @@ function App() {
             <line y1="235" x2="255" y2="235" stroke="#211A12" stroke-width="0.5"/>
         </svg>
       <Showcase />
-      <div style={{gridColumn:'3', width: 200, border:'black solid 1px'}}>Side Thing</div>
+      <Form />
       <div style={{gridColumn:'1/4', border:'black solid 1px'}}>Rest</div>
     </div>
   );
