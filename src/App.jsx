@@ -2,7 +2,6 @@ import {Showcase} from './components/showcase/Showcase.jsx';
 import { appStyle } from './AppStyle.js';
 import { Form } from './components/form/Form.jsx';
 import { svg } from './components/fonts_colors';
-import { Map } from './components/map/Map';
 import Navbar from './components/navbar/Navbar.jsx';
 
 // Added Divs to visualize where the rest of the element go
