@@ -8,7 +8,7 @@ export const formDiv = {
     fontFamily: fonts.textLight.fontFamily,
     color: colors.black,
     fontSize: '1.4vw',
-    height: '100%',
+    height: '100%'
 }
 
 export const form = {
@@ -23,7 +23,7 @@ export const form = {
     width: '100%',
     alignItems: 'center',
     justifyItems: 'end',
-    padding: '1rem'
+    padding: '1.5rem 3.5rem'
 }
 
 export const label = {
