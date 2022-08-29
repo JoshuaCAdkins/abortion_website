@@ -3,7 +3,7 @@ import { svg } from "../fonts_colors"
 
 export const Map = () => {
     return (
-        <svg style={svg} viewBox="0 0 500 245" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg style={svg} viewBox="0 0 500 250" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="512" y1="9" x2="217" y2="9" stroke="#211A12" stroke-width="0.5"/>
             <line x1="460" x2="460" y2="180" stroke="#211A12" stroke-width="0.5"/>
               <svg viewBox="0 0 410 270" fill="hsla(34, 47%, 97%, 1)" xmlns="http://www.w3.org/2000/svg">

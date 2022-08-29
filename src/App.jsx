@@ -14,10 +14,11 @@ function App() {
         <Form />
             <Routes>
               <Route path='/' element={<Showcase />}></Route>
-              <Route path='/states' element={<Map />}></Route>
+              <Route path='/states' element={
+              <Map />
+              }></Route>
             </Routes>
       </div>
-      <div style={{gridColumn:'1/4', border:'black solid 1px'}}>Rest</div>
     </>
   );
 }

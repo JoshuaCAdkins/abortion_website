@@ -26,10 +26,11 @@ export const appStyle = {
     borderLeft: 'black solid 1px', // Decorative
     borderRight: 'black solid 1px', // Decorative
     margin: '-0.8rem 4rem',
-    padding: '0rem 5rem',
+    padding: '0rem 3rem',
     display: 'grid',
-    gridTemplateColumns: '35% 35% 30%',
-    gridTemplateRows: '13% 65% fit-content',
-    gap: '2rem'
+    gridTemplateColumns: '30% 35% 35%',
+    gridTemplateRows: '15% 73%',
+    rowGap: '6rem',
+    columnGap: '0.5rem'
 }
 
