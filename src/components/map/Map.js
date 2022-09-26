@@ -1,7 +1,186 @@
-import { svg } from "../fonts_colors"
+import { svg } from "../fonts_colors";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectAge, selectAllStates, selecthealthRisk, selectLmp, selectMinorsInfo, selectRape, selectState } from "../../redux/Store&Selectors/selectors";
 
 
 export const Map = () => {
+    // Colors
+    let red = 'B67249';
+    let orange = 'F1AC44';
+    let yellow = 'ECDB58';
+    let lightgreen = 'A9CB2F';
+    let green = '7AB748';
+    // Selectors
+    let age = useSelector(selectAge);
+    let state = useSelector(selectState);
+    let lmpInput = useSelector(selectLmp);
+    let rapeInput = useSelector(selectRape);
+    let healthInput = useSelector(selecthealthRisk);
+    let allStates = useSelector(selectAllStates);
+    let minorsInfo = useSelector(selectMinorsInfo);
+    // weeks since last menstrual period
+    let lmp = lmpInput;
+    // Where is the user
+    let homeState = state;
+    // Speacial case?
+    let rape = rapeInput;
+    let healthRisk = healthInput;
+
+    useEffect(() => {
+        // Check Lmp -> Get states where is legal regarding lmp (the states where abortion is ilegal have lmp = 0. So those are discarted here as well)
+        for(const state in allStates){
+            // If abortion is ilegal
+            if(allStates[state]["banned_after_weeks_since_LMP"] === 0){
+                let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                if(stateSvg !== null){
+                    stateSvg.style.fill = red;
+                }
+                // If there is a special case
+                if(healthRisk){
+                    // If health risk
+                    if(allStates[state]["exception_health"]){
+                        // If health excepcions are restricted
+                        if(allStates[state]["exception_health"] !== 'Any' && allStates[state]["exception_health"] !== true){
+                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = yellow;
+                            }
+                        }
+                        // If any health risk matters
+                        else {
+                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = green;
+                            }
+                        }
+                    }
+                    // If life risk
+                    else if(allStates[state]["exception_life"]){
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = orange;
+                            }
+                    }
+                }
+                if(rape){
+                    if(allStates[state]["exception_rape_or_incest"]){
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = green;
+                            }
+                    }
+                }
+            }
+            // If can be legal (99 means is always legal)
+            if(allStates[state]["banned_after_weeks_since_LMP"] > lmp || allStates[state]["banned_after_weeks_since_LMP"] === 99){
+                // If user is a minor
+                // Get States where minors can get an abortion
+                if(age < 18){
+                    // If minor is adult in one state (some states consider adult after 16)
+                    if(minorsInfo[state]["below_age"] < age){
+                        // Turn light green
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                        if(stateSvg !== null){
+                            stateSvg.style.fill = lightgreen;
+                        }
+                    }
+                    // If minor can get abortion by own decision
+                    else if(minorsInfo[state]["allows_minor_to_consent_to_abortion"]){
+                        // If State is not null (ex: hawaii is missing). Turn state green
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                        if(stateSvg !== null){
+                            stateSvg.style.fill = green;
+                        }
+                    }
+                    // legal with parents consent
+                    else if(minorsInfo[state]["parental_consent_required"]){
+
+                        // if only one parent required turn yellow
+                        if(minorsInfo[state]["parents_required"] === 1){
+                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = yellow;
+                            }
+                        }
+                        // If two parents are required turn orange
+                        else if(minorsInfo[state]["parents_required"] === 2){
+                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = orange;
+                            }
+                        }
+                    }
+                    // If parental notification required turn orange
+                    else if(minorsInfo[state]["parental_notification_required"]){
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                        if(stateSvg !== null){
+                                stateSvg.style.fill = orange;
+                        }
+                    }
+                    // Go back to original
+                    else {
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                        if(stateSvg !== null){
+                            stateSvg.style.fill = '';
+                        }
+                    }
+                }
+                // If adult
+                else {
+                    // Turn green
+                    let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                    if(stateSvg !== null){
+                        stateSvg.style.fill = green;
+                    }
+                }
+
+            }
+            // If weeks since lmp is more than allowed
+            else {
+                let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                if(stateSvg !== null){
+                    stateSvg.style.fill = red;
+                }
+                // If there is a special case
+                if(healthRisk){
+                    // If health risk
+                    if(allStates[state]["exception_health"]){
+                        // If health excepcions are restricted
+                        if(allStates[state]["exception_health"] !== 'Any' && allStates[state]["exception_health"] !== true){
+                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = yellow;
+                            }
+                        }
+                        // If any health risk matters
+                        else {
+                            let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = green;
+                            }
+                        }
+                    }
+                    // If life risk
+                    else if(allStates[state]["exception_life"]){
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = orange;
+                            }
+                    }
+                }
+                if(rape){
+                    if(allStates[state]["exception_rape_or_incest"]){
+                        let stateSvg = document.getElementById(`${state.toLowerCase()}`);
+                            if(stateSvg !== null){
+                                stateSvg.style.fill = green;
+                            }
+                    }
+                }
+            }
+        }
+    })
+
     return (
         <svg style={svg} viewBox="0 0 500 250" fill="none" xmlns="http://www.w3.org/2000/svg">
             <line x1="512" y1="9" x2="217" y2="9" stroke="#211A12" stroke-width="0.5"/>
@@ -13,7 +192,7 @@ export const Map = () => {
     <path d="M329.5 108.5V103.5H327.5L323 104.5L320 99V105.5L314 110V114H311.5V118L308.5 119.5V123L314 127L316 130L327.5 125.5L329.5 114L331.5 115.5H334.5V112L336.75 108.25L339 104.5L344 103.5L338 101.5L329.5 108.5Z" stroke="black" id='westVirginia' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M380 62H372V54V50V47.5L373.5 44.5V40.5V37H375.5L381.5 54L383.5 56.5L380 62Z" stroke="black" id='newHampshire' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M377 35L375.5 37L382 53L384.5 55V49.5L389 47.5V46L392.5 45V39.5L395.5 41V39.5H397.5L399 37L405 33L404 32L401.5 30H399V27L395.5 25.5L392.5 14L388 12L384.5 15.5L382 12L379 20V30L377 32V35Z" stroke="black" id='maine' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M384.5 56L384.321 56.5367M384.321 56.5367L383.5 59L384.5 60L383.5 62.5L389.5 68H391.5V69.5L389.5 70.5H386.5L385 72L382 68L368.5 71.5L367.5 64.5L372 62.5H380.5L384.321 56.5367Z" stroke="blackk" id='massachusetts' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M384.5 56L384.321 56.5367M384.321 56.5367L383.5 59L384.5 60L383.5 62.5L389.5 68H391.5V69.5L389.5 70.5H386.5L385 72L382 68L368.5 71.5L367.5 64.5L372 62.5H380.5L384.321 56.5367Z" stroke="black" id='massachusetts' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M383 73.5L381.5 68.5L378.5 70L380.5 72.5V75.5L383 73.5Z" stroke="black" id='rhodeIsland' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M271 92.5H269L271 115.5L270.5 117V118.5L272.5 120.5L269 126.5V129.5H273.5L276.5 130.5L277.5 128L279.5 129.5L281 125L282.5 127H284.5L285 125.5L286 125V122H287L287.5 118L289.5 120.5L291.5 118V115.5L288 90.5L287.5 89.5L272.5 91L271 92.5Z" stroke="blackk" id='indiana' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M322.5 79.5L318.5 82L320 96.5L320.5 99.5L321 100.5L322.5 104.5L356 98V96L360 95L361.5 90.5L358 87L357.5 85L360 82V79.5H358L354 75L323.5 82L322.5 79.5Z" stroke="black" id='pennsylvania' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -38,7 +217,7 @@ export const Map = () => {
     <path d="M149 100.5L150.5 81L188.5 82.5L193 87L194.5 84.5H199V87H203.5L204.5 90.5L208 94L206.5 98L208 101.5L209 108.5L212 112L164 111V101.5L149 100.5Z" stroke="black" id='nebraska' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M6 67.5L7.5 65.5L36.5 73L29 102L61.5 146.5L62.5 153.5L65 157L60.5 159L59.5 162.5L58 164.5L59.5 168.5V171L36.5 168.5V161.5L31.5 155.5H29V151.5H26.5L22 146.5L13.5 143.5L15.5 137H13.5L15.5 134L11.5 128L8.5 121.5L11.5 119.5V117.5L7.5 116.5V110.5L10 112.5V107.5H15.5L10 105.5L7.5 107.5L4.5 105.5L6 103L3 97V91L4.5 87.5L1 80L6 75V73L7.5 71.5L6 67.5Z" stroke="black" id='california' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M83.5 188.5L56.5 172L59.5 171V168.5L58 164.5L59.5 162L60.5 159L64.5 157L62.5 153L61.5 146.5L63.5 137.5L68 139.5L69.5 130.5L108 136L101 190.5L83.5 188.5Z" stroke="black" id='arizona' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M101.5 190.5L108.5 136L131 139L154.5 141.5V145L150.5 189.5L121.5 186L120.5 188H108.5L107.5 191.5L101.5 190.5Z" stroke="black" id='newMexico' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M101.5 190.5L108.5 136L131 139L154.5 141.5V145L150.5 189.5L121.5 186L120.5 188H108.5L107.5 191.5L101.5 190.5Z" stroke="black" id='new mexico' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M162 140.5L163.5 111L212 112L216 114L214.5 118L218.5 121L219.5 141.5L162 140.5Z" stroke="black" id='kansas' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M203.5 78H240L242 79.5L241 82.5C242.449 84.9588 243.355 84.9383 245 84.5L249 90.5L247 93V95.5L242 96.5L244 101L242 104.5L241 105.5V106.5L238 105.5H208.5V102.5L206.5 98L208.5 94L204.5 90.5L203.5 86.5L204.5 81.5L203.5 78Z" stroke="black" id='iowa' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M154.5 145.5V141L150.5 190L122 186.5L121 188.5L135 204.5V208.5L142.5 215.5L149 217.5L154.5 211.5H162.5L169.5 217.5L171.5 224L175.5 232L179 233V239L182 245L193.5 248L197 250.5C197.667 249.167 198.6 245 197 239C195 231.5 201.5 232 201.5 229C201.5 226.6 210.833 222.667 215.5 221L218 217.5L226.5 212.5L228 208.5V204.5L229.5 198L228 196.5L224.5 190V174H219.5L214.5 170L209.5 172.5L205.5 174L201.5 170L199 174L195.5 170L192.5 172.5V170H188.5L182 168.5V166L181 167L176.5 164.5V146.5L154.5 145.5Z" stroke="black" id='texas' stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>

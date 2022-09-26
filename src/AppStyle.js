@@ -1,4 +1,4 @@
-import { fonts, colors} from "./components/fonts_colors"
+import {colors} from "./components/fonts_colors"
 
 // 10 MOST COMMON SCREEN SIZES
 // 5	2560×1440	34,152(7.41%) 1
