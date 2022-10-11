@@ -1,4 +1,5 @@
-import { showCaseStyle, text} from './showcase.js';
+import {text} from './showcase.js';
+import React from 'react';
 
 export const Showcase = () => {
 return (

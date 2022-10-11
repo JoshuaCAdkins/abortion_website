@@ -42,19 +42,7 @@ export const input = {
     padding: '0.1rem',
     fontFamily: fonts.textLight.fontFamily
 }
-export const button = {
-    gridColumn: '2',
-    gridRow: '6',
-    fontFamily: fonts.textThin,
-    fontSize: '1.4vw',
-    boxShadow: '0em 0.2em 0.2em rgba(0, 0, 0, 0.25)',
-    borderRadius: '5%',
-    border: 'none',
-    background: colors.black,
-    color: colors.white,
-    width: '70%',
-    height: '40%'
-}
+
 export const checkboxDiv = {
    gridRow: '5',
    gridColumn: '1/3',
