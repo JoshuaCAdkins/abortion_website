@@ -1,7 +1,7 @@
 import { minorResponse } from "./minorResponse";
 import { response } from "./Response";
 
-
+const apiKey = 'apikeyhere';
 const endpoint = 'https://api.abortionpolicyapi.com/v1/gestational_limits/states';
 
 // fake response just to get shit done while waiting for the API to work
