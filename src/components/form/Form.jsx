@@ -1,11 +1,12 @@
-import {button, checkboxDiv, checkboxInput, form, formDiv, input, label} from './formStyles.js';
-
+import { checkboxDiv, checkboxInput, form, formDiv, input, label} from './formStyles.js';
+import React from 'react';
+import { FormButton } from '../FormButton/FormButton.js';
 export const Form = () => {
     return(
         <div style={formDiv}>
         <form action='' method='GET' style={form}>
             <label for='state-input' style={label}>What State are you in?</label>
-            <input name='state-input' list='states' id='state-input' style={input} required/>
+            <input name='state-input' list='states' id='state-input' type='text' style={input} required/>
                 <datalist id='states'>
                 <option value="Alabama"></option>
 						<option value="Alaska"></option>
@@ -64,13 +65,13 @@ export const Form = () => {
             <label for='age-input' style={label}>How old are you?</label>
             <input name='age-input' id='age-input' type='number' min='5' max='70' style={input} required/>
             <legend style={label}>Is any of these your case?</legend>
-            <fieldset style={checkboxDiv}>
+            <fieldset id='special-inputs' style={checkboxDiv}>
                 <input id='rape-incest-input' name='incest-rape-input' type='checkbox' style={checkboxInput}/>
                 <label for='rape-incest-input'>Rape / Incest</label>
                 <input id='health-risks-input' name='health-risk-input' type='checkbox' style={checkboxInput}/>
                 <label for='health-risks-input'>Health Risks</label>
             </fieldset>
-            <button style={button}>Help me!</button>
+            <FormButton />
          </form>
          </div>
     )
